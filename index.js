@@ -114,6 +114,7 @@ var compile = function(schema, cache, root, reporter, opts) {
   var verbose = opts ? !!opts.verbose : false;
   var greedy = opts && opts.greedy !== undefined ?
     opts.greedy : false;
+  var regexLib = (opts && opts.regexLib) || RegExp;
 
   var syms = {}
   var allocated = []
@@ -143,7 +144,7 @@ var compile = function(schema, cache, root, reporter, opts) {
   var patterns = function(p) {
     if (reversePatterns[p]) return reversePatterns[p]
     var n = gensym('pattern')
-    scope[n] = new RegExp(p)
+    scope[n] = new regexLib(p)
     reversePatterns[p] = n
     return n
   }
